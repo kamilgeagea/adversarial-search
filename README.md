@@ -60,8 +60,8 @@ Ensure the following Imports are in Main.py File:
 ```
 
 ## Overall code process and code snippets
-**Code Process:\
-Step 1: **
+**Code Process:**
+**Step 1: **
 ```
 ```
 
