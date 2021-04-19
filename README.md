@@ -52,6 +52,7 @@ from alpha_beta_pruning import alpha_beta_pruning
 ## Overall code process and code snippets
 
 **Input:** 
+```
 Input the following values into the function --------(<#tokens> <#taken_tokens> <list_of_taken_tokens> <depth>)
 where: <#tokens>              --> Number of Tokens in the game
        <#taken_tokens>        --> Number of tokens that have already been removed from the game 
@@ -60,6 +61,7 @@ where: <#tokens>              --> Number of Tokens in the game
               > If this number is EVEN, the current move belongs to Max
        <list_of_taken_tokens> --> An array of tokens that have already been removed from the game. 
        <depth>                --> The search depth. If the depth is 0, this is the state in which a winner is determined.
+```
 
 ```
 
