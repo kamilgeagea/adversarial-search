@@ -69,6 +69,18 @@ where: <#tokens>              --> Number of Tokens in the game
 ```
 
 **Output:**
+The following information will be printed to the console
+```
+The best move (i.e., the tokens number that is to be taken) for the current player (alpha-beta algorithm)
+       • The value associated with the move (alpha-beta algorithm)
+       • The total number of nodes visited
+       • The number of nodes evaluated (either at end game state or when the specified depth is reached)
+       • The maximum depth reached (the root node is at depth 0)
+       • The average effective branching factor (average number of successors that are not pruned)
+```
+
+
+## Heuristic Function
 ```
 Return 'Values' as follows:
        • At an end game state where Player A (MAX) wins: 1.0
@@ -89,18 +101,7 @@ o if it is Player A (MAX)’s turn:
 o If it is Player B(MIN)’s turn, perform the same checks as above, but return the negation of the values specified above.
 ```
 
-The following information will be printed to the console
-```
-The best move (i.e., the tokens number that is to be taken) for the current player (alpha-beta algorithm)
-       • The value associated with the move (alpha-beta algorithm)
-       • The total number of nodes visited
-       • The number of nodes evaluated (either at end game state or when the specified depth is reached)
-       • The maximum depth reached (the root node is at depth 0)
-       • The average effective branching factor (average number of successors that are not pruned)
-```
-
-
-## Heuristic Function
+**Code:**
 ```
 h1(tokens, last_picked_token, is_max, depth):
     # The output calculated below indicate the advantage of each player
