@@ -53,8 +53,7 @@ from alpha_beta_pruning import alpha_beta_pruning
 
 **Input:** 
 ```
-The function generate_input('Path_to_file')
-extracts the following information:
+The function generate_input('Path_to_file')extracts the following information:
        <#tokens>              --> Number of Tokens in the game
        <#taken_tokens>        --> Number of tokens that have already been removed from the game 
               > If this number is 0, it is the first move of the game
@@ -65,7 +64,9 @@ extracts the following information:
        
 Once the required values have been extracted, input them into alpha-beta function
 ```
-
+Example:
+```
+```
 
 **Output:**
 The following information will be printed to the console
