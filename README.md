@@ -51,7 +51,7 @@ from alpha_beta_pruning import alpha_beta_pruning
 
 ## Overall code process and code snippets
 
-**Input: ** 
+**Input:** 
 Input the following values into the function --------(<#tokens> <#taken_tokens> <list_of_taken_tokens> <depth>)
 where: <#tokens>              --> Number of Tokens in the game
        <#taken_tokens>        --> Number of tokens that have already been removed from the game 
@@ -66,7 +66,8 @@ where: <#tokens>              --> Number of Tokens in the game
 
 ```
 
-**Output: **
+**Output:**
+```
 Return 'Values' as follows:
        • At an end game state where Player A (MAX) wins: 1.0
        • At an end game state where Player B (MIN) wins: -1.0 • Otherwise,
@@ -84,6 +85,7 @@ o if it is Player A (MAX)’s turn:
               > If the count is odd, return 0.6.
               > If the count is Even, return -0.6.
 o If it is Player B(MIN)’s turn, perform the same checks as above, but return the negation of the values specified above.
+```
 
 The following information will be printed to the console
 ```
