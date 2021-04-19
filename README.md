@@ -38,49 +38,107 @@ Winner: Player B
        > (Mac OS: Pycharm -> Preferences -> Project -> Python Interpretor -> "+")
        
        > (Windows OS: File -> Settings -> Project -> Python Interpretor -> "+")
-       
-**Step 3:** Install the following packages: 
 
-       > numpy
-
-**Step 4:** Clone Project
+**Step 3:** Clone Project
 
        > Import this project from Version Control
        
-**Step 5:**
-
-      > 
-      > 
-      >
-      > 
-
 ### Import Usage:
 Ensure the following Imports are in Main.py File:
 ```
+from alpha_beta_pruning import alpha_beta_pruning
 ```
 
 ## Overall code process and code snippets
-**Code Process:**
-**Step 1: **
-```
+
+**Input: ** 
+Input the following values into the function --------(<#tokens> <#taken_tokens> <list_of_taken_tokens> <depth>)
+where: <#tokens>              --> Number of Tokens in the game
+       <#taken_tokens>        --> Number of tokens that have already been removed from the game 
+              > If this number is 0, it is the first move of the game
+              > If this number is ODD, the current move belongs to Min
+              > If this number is EVEN, the current move belongs to Max
+       <list_of_taken_tokens> --> An array of tokens that have already been removed from the game. 
+       <depth>                --> The search depth. If the depth is 0, this is the state in which a winner is determined.
+
 ```
 
-**Step 2: **
-```
-```
-
-**Step 3: **
-```
 
 ```
 
-**Step 4: **
+**Output: **
+Return 'Values' as follows:
+       • At an end game state where Player A (MAX) wins: 1.0
+       • At an end game state where Player B (MIN) wins: -1.0 • Otherwise,
+
+o if it is Player A (MAX)’s turn:
+       ▪ If token 1 is not taken yet, return a value of 0
+       ▪ If the last move was 1, count the number of the possible successors.
+              > If the count is Odd, return 0.5.
+              > If the count is Even, return -0.5.
+       ▪ If last move is a prime, count the multiples of that prime in all possible successors. 
+              > If the count is odd, return 0.7.
+              > If the count is Even, return -0.7.
+       ▪ If the last move is NOT prime, find the largest prime that can divide last move,
+       count the multiples of that prime, including the prime number itself if it hasn’t already been taken, in all the possible successors.
+              > If the count is odd, return 0.6.
+              > If the count is Even, return -0.6.
+o If it is Player B(MIN)’s turn, perform the same checks as above, but return the negation of the values specified above.
+
+The following information will be printed to the console
 ```
+The best move (i.e., the tokens number that is to be taken) for the current player (alpha-beta algorithm)
+       • The value associated with the move (alpha-beta algorithm)
+       • The total number of nodes visited
+       • The number of nodes evaluated (either at end game state or when the specified depth is reached)
+       • The maximum depth reached (the root node is at depth 0)
+       • The average effective branching factor (average number of successors that are not pruned)
 ```
 
-**Step 5: **
+
+## Heuristic Function
 ```
+h1(tokens, last_picked_token, is_max, depth):
+    # The output calculated below indicate the advantage of each player
+    # If the number is negative, the output favors MIN
+    # If the number is positive, the output favors MAX
+    # factor determines whether the output should favor MIN or MAX
+    factor = 1 if is_max else -1
+
+    if 1 in tokens:
+        return 0
+
+    if game_over(tokens, last_picked_token):
+        return - factor
+
+    if last_picked_token == 1:
+        odd_valid_moves = len(tokens) % 2 != 0
+        return factor * 0.5 if odd_valid_moves else -0.5 * factor
+    if is_prime(last_picked_token):
+        children = generate_children(
+            tokens, last_picked_token, depth)
+        count = 0
+        for child in children:
+            for element in child[0]:
+                if is_multiple(element, last_picked_token):
+                    count += 1
+        odd_count = count % 2 != 0
+        return factor * 0.7 if odd_count else factor * -0.7
+    else:
+        for token in reversed(tokens):
+            if is_prime(token) and is_factor(token, last_picked_token):
+                children = generate_children(
+                    tokens, last_picked_token, depth)
+                count = 0
+                for child in children:
+                    for element in child[0]:
+                        if is_multiple(element, token):
+                            count += 1
+                odd_count = count % 2 != 0
+                return factor * 0.6 if odd_count else factor * -0.6
 ```
+
+
 
 ## Get Help
 To get help or ask questions, Please Contact any of the following students: 
