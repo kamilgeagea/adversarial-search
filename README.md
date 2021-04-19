@@ -53,19 +53,19 @@ from alpha_beta_pruning import alpha_beta_pruning
 
 **Input:** 
 ```
-Input the following values into the function --------(<#tokens> <#taken_tokens> <list_of_taken_tokens> <depth>)
-where: <#tokens>              --> Number of Tokens in the game
+The function generate_input('Path_to_file')extracts the following information:
+       <#tokens>              --> Number of Tokens in the game
        <#taken_tokens>        --> Number of tokens that have already been removed from the game 
               > If this number is 0, it is the first move of the game
               > If this number is ODD, the current move belongs to Min
               > If this number is EVEN, the current move belongs to Max
        <list_of_taken_tokens> --> An array of tokens that have already been removed from the game. 
        <depth>                --> The search depth. If the depth is 0, this is the state in which a winner is determined.
+       
+Once the required values have been extracted, input them into alpha-beta function
 ```
-
+Example:
 ```
-
-
 ```
 
 **Output:**
