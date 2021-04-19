@@ -56,11 +56,12 @@ alpha = float("-inf")
 beta = float("inf")
 
 
-(move, value, nb_visited_nodes, nb_evaluated_nodes, max_depth_reached) = alpha_beta_pruning(
+(move, value, nb_visited_nodes, nb_evaluated_nodes, max_depth_reached, parent_count) = alpha_beta_pruning(
     state, alpha, beta, max_depth)
 print("Value: " + str(value))
 print("Move: " + str(move))
 print("Number of Nodes Visited: " + str(nb_visited_nodes))
 print("Number of Nodes Evaluated: " + str(nb_evaluated_nodes))
 print("Max Depth Reached: " + str(max_depth_reached - depth))
-print("Average Branching Factor: ")
+print("Average Branching Factor: " +
+      str(float(nb_visited_nodes-1)/parent_count))

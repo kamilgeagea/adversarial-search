@@ -25,6 +25,7 @@ def alpha_beta_pruning(state, alpha, beta, max_depth):
     nb_visited_nodes = 0
     nb_evaluated_nodes = 0
     max_depth_reached = 0
+    parent_count = 0
 
     # Check if not the first move in order to proceed to base case
     if not first_move:
@@ -33,11 +34,11 @@ def alpha_beta_pruning(state, alpha, beta, max_depth):
             # If game over, return results
             if game_over(tokens, last_token):
                 result = -1 if is_max else 1
-                return (result, None, 1, 1, depth)
+                return (result, None, 1, 1, depth, 0)
         # If max_depth exceeded or game over, return heuristic of state
         elif depth >= max_depth or game_over(tokens, last_token):
             heuristic = e(tokens, last_token, is_max, depth)
-            return (heuristic, None, 1, 1, depth)
+            return (heuristic, None, 1, 1, depth, 0)
 
     if is_max:
         # Set Max Result to -inf, and best move to None
@@ -46,7 +47,7 @@ def alpha_beta_pruning(state, alpha, beta, max_depth):
         children = generate_children(tokens, last_token, depth)
         for child in children:
             # Alpha Beta Pruning call
-            (result, _, child_visited_nodes, total_evaluated_nodes, depth_reached) = alpha_beta_pruning(
+            (result, _, child_visited_nodes, total_evaluated_nodes, depth_reached, child_parent_count) = alpha_beta_pruning(
                 child, alpha, beta, max_depth)
             # If result of alpha-beta pruning greater than max_result, update max_result and best move
             if result > max_result:
@@ -59,10 +60,13 @@ def alpha_beta_pruning(state, alpha, beta, max_depth):
             nb_evaluated_nodes += total_evaluated_nodes
             # Check if child's max_depth_reached is greater than current max_depth_reached
             max_depth_reached = max(max_depth_reached, depth_reached)
+            # Add the child's total parent count
+            parent_count += child_parent_count
             # If beta <= alpha -> Prune the rest of the branches
             if beta <= alpha:
                 break
-        return (max_result, best_move, nb_visited_nodes + 1, nb_evaluated_nodes, max_depth_reached)
+        # Increment nb of visited nodes and parent count
+        return (max_result, best_move, nb_visited_nodes + 1, nb_evaluated_nodes, max_depth_reached, parent_count + 1)
     else:
         # Set Min Result to -inf, and best move to None
         min_result = float("infinity")
@@ -70,7 +74,7 @@ def alpha_beta_pruning(state, alpha, beta, max_depth):
         children = generate_children(tokens, last_token, depth)
         for child in children:
             # Alpha Beta Pruning call
-            (result, _, child_visited_nodes, total_evaluated_nodes, depth_reached) = alpha_beta_pruning(
+            (result, _, child_visited_nodes, total_evaluated_nodes, depth_reached, child_parent_count) = alpha_beta_pruning(
                 child, alpha, beta, max_depth)
             # If result of alpha-beta pruning less than min_result, update max_result and best move
             if result < min_result:
@@ -83,7 +87,10 @@ def alpha_beta_pruning(state, alpha, beta, max_depth):
             nb_evaluated_nodes += total_evaluated_nodes
             # Check if child's max_depth_reached is greater than current max_depth_reached
             max_depth_reached = max(max_depth_reached, depth_reached)
+            # Add the child's total parent count
+            parent_count += child_parent_count
             # If beta <= alpha -> Prune the rest of the branches
             if beta <= alpha:
                 break
-        return (min_result, best_move, nb_visited_nodes + 1, nb_evaluated_nodes, max_depth_reached)
+        # Increment nb of visited nodes and parent count
+        return (min_result, best_move, nb_visited_nodes + 1, nb_evaluated_nodes, max_depth_reached, parent_count + 1)
