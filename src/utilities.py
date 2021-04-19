@@ -1,3 +1,6 @@
+import random
+import re
+
 '''
 Determines if n is a factor of m
 Arguments:
@@ -54,7 +57,7 @@ Determines if the game is over (no more available moves)
 Arguments:
     - token: List of Numbers
     - last_picked_token: Number
-Returns Boolean  
+Returns Boolean
 '''
 
 
@@ -105,3 +108,106 @@ def generate_children(tokens, last_picked_token, depth):
                     ([element for element in tokens if element != token], token, depth + 1))
 
     return children
+
+
+'''
+'''
+
+
+def generate_test_case():
+    # Step 1 - Generate tokens
+    n = random.randint(10, 30)
+    tokens = list(range(1, n))
+
+    # Step 2 - Generate nb of moves
+    nb_moves = random.randint(0, 5)
+
+    # Step 3 - Generate max_depth
+    max_depth = random.randint(0, 5)
+
+    # Step 4 - Play n moves
+    move = 0
+    last_token = None
+    list_of_picked_tokens = []
+    while move < nb_moves:
+        children = generate_children(tokens, last_token, move)
+        random.shuffle(children)
+        (new_tokens, picked_token, depth) = children[0]
+        tokens = new_tokens
+        list_of_picked_tokens.append(picked_token)
+        last_token = picked_token
+        move = depth
+    return (n, move, list_of_picked_tokens, max_depth)
+
+
+'''
+'''
+
+
+def generate_test_cases(n):
+    test_cases = []
+    for i in range(0, n):
+        try:
+            test_cases.append(generate_test_case())
+        except:
+            ""
+    return test_cases
+
+
+'''
+'''
+
+
+def generate_test_case_file(filename, n):
+    test_cases = generate_test_cases(n)
+    with open(filename, mode="w") as f:
+        for (n, move, list_of_picked_tokens, max_depth) in test_cases:
+            f.write("TakeTokens " + str(n) + " " + str(move) + " " +
+                    "".join([str(picked_token) + " " for picked_token in list_of_picked_tokens]) + str(max_depth) + "\n")
+        f.close()
+
+
+'''
+'''
+
+
+def generate_output(filename, abp_list):
+    with open(filename, mode="w") as f:
+        for idx, abp in enumerate(abp_list):
+            (result, move, visited_nodes, evaluated_nodes,
+             max_depth_reached, parent_count) = abp
+            avg_effective_branching_factor = float(
+                (visited_nodes-1)) / parent_count
+            f.write("Case " + str(idx)
+                    + "\nMove: " + str(move)
+                    + "\nValue: " + str(float(result))
+                    + "\nNumber of Nodes Visited " + str(visited_nodes)
+                    + "\nNumber of Nodes Evaluated " + str(evaluated_nodes)
+                    + "\nMax Depth Reached: " + str(max_depth_reached)
+                    + "\nAvg Effective Branching Factor: " +
+                    str(avg_effective_branching_factor)
+                    + "\n\n")
+
+
+'''
+'''
+
+
+def extract_input(filename):
+    inputs = []
+    with open(filename) as f:
+        test_cases = list(f)
+        test_cases = [case.strip("\n") for case in test_cases]
+        test_cases = [[ele for ele in case.split(" ") if ele.isdigit()]
+                      for case in test_cases if "TakeTokens" in case]
+        for case in test_cases:
+            case = [int(c) for c in case]
+            tokens = range(1, case.pop(0)+1)
+            depth = case.pop(0)
+            max_depth = case.pop() + depth
+            list_of_taken_tokens = case
+            last_token = list_of_taken_tokens[-1] if len(
+                list_of_taken_tokens) > 0 else None
+            tokens = list(set(tokens) - set(list_of_taken_tokens))
+            inputs.append((tokens, last_token, depth, max_depth))
+    return inputs

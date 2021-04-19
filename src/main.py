@@ -1,67 +1,25 @@
 from alpha_beta_pruning import alpha_beta_pruning
+from utilities import generate_test_case_file, generate_output, extract_input
 
-# 7 1 1 2
+# TEST CASES
 
-# tokens = [1, 2, 3]
-# depth = 0
-# state = (tokens, None, depth)
-# alpha = float("-inf")
-# beta = float("+inf")
-# max_depth = 0
+filename = "./testcases/testcase.txt"
+inputs = extract_input(filename)
 
-# tokens = [2, 3, 4, 5, 6, 7]
-# taken_tokens = 1
-# list_of_taken_tokens = [1]
-
-# last_token = 1
-# depth = 1
-# state = (tokens, last_token, depth)
-# alpha = float("-inf")
-# beta = float("+inf")
-# max_depth = 3
-
-# 10 3 4 2 6 4
-# tokens = [1, 3, 5, 7, 8, 9, 10]
-# taken_tokens = 3
-# list_of_taken_tokens = [4, 2, 6]
-# last_token = 6
-# depth = 3
-# state = (tokens, last_token, 3)
-# alpha = float("-inf")
-# beta = float("inf")
-# max_depth = 4 + 3
-
-# 8 3 3 1 2 0
-# tokens = [4, 5, 6, 7, 8]
-# taken_tokens = 3
-# depth = 3
-# list_of_taken_tokens = [3, 1, 2]
-# max_depth = 0
-# last_token = 2
-
-# state = (tokens, last_token, depth)
-# alpha = float("-inf")
-# beta = float("inf")
-
-# 10 5 3 1 8 4 2 0
-tokens = [5, 6, 7, 9, 10]
-taken_tokens = 5
-depth = 5
-list_of_taken_tokens = [3, 1, 8, 4, 2]
-max_depth = 0
-last_token = 2
-
-state = (tokens, last_token, depth)
-alpha = float("-inf")
-beta = float("inf")
+ab = [alpha_beta_pruning((x[0], x[1], x[2]), float(
+    "-inf"), float("inf"), x[3]) for x in inputs]
 
 
-(move, value, nb_visited_nodes, nb_evaluated_nodes, max_depth_reached, parent_count) = alpha_beta_pruning(
-    state, alpha, beta, max_depth)
-print("Value: " + str(value))
-print("Move: " + str(move))
-print("Number of Nodes Visited: " + str(nb_visited_nodes))
-print("Number of Nodes Evaluated: " + str(nb_evaluated_nodes))
-print("Max Depth Reached: " + str(max_depth_reached - depth))
-print("Average Branching Factor: " +
-      str(float(nb_visited_nodes-1)/parent_count))
+generate_output("./results/testcases.txt", ab)
+
+
+# RANDOM TEST CASES
+
+filename = "./testcases/random_testcases.txt"
+generate_test_case_file(filename, 5)
+inputs = extract_input(filename)
+
+ab = [alpha_beta_pruning((x[0], x[1], x[2]), float(
+    "-inf"), float("inf"), x[3]) for x in inputs]
+
+generate_output("./results/random_testcases.txt", ab)

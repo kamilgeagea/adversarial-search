@@ -1,0 +1,5 @@
+TakeTokens 21 2 5 20 1
+TakeTokens 29 0 3
+TakeTokens 18 3 3 6 2 2
+TakeTokens 23 5 7 14 1 12 3 5
+TakeTokens 12 5 1 5 10 2 8 3
