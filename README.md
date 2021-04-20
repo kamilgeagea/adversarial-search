@@ -66,6 +66,19 @@ Once the required values have been extracted, input them into alpha-beta functio
 ```
 Example:
 ```
+from alpha_beta_pruning import alpha_beta_pruning
+from utilities import generate_output, extract_input
+
+# Extract input from testcase/testcase.txt
+filename = "./testcases/testcase.txt"
+inputs = extract_input(filename)
+
+# Call Alpha-Beta-Pruning on inputs
+ab = [alpha_beta_pruning((x[0], x[1], x[2]), float(
+    "-inf"), float("inf"), x[3]) for x in inputs]
+
+# Generate output into results/testcases.txt
+generate_output("./results/testcases.txt", ab)
 ```
 
 **Output:**
