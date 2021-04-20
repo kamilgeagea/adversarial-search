@@ -111,6 +111,9 @@ def generate_children(tokens, last_picked_token, depth):
 
 
 '''
+Generates a test case by playing the game with random values
+Arguments: None
+Returns tuple (m, move, list_of_picked_tokens, max_depth)
 '''
 
 
@@ -141,6 +144,10 @@ def generate_test_case():
 
 
 '''
+Generates multiple test cases
+Argument:
+    - n: number
+Returns list of tuples (m, move, list_of_picked_tokens, max_depth)
 '''
 
 
@@ -155,6 +162,11 @@ def generate_test_cases(n):
 
 
 '''
+Generates the output of generate_test_cases and put it into a file
+Arguments:
+    - filename: string
+    - n: number
+Returns void
 '''
 
 
@@ -168,6 +180,11 @@ def generate_test_case_file(filename, n):
 
 
 '''
+Generates a file containing formatted output of the alpha beta pruning algorithm
+Arguments:
+    - filename: string
+    - abp_list: list of alpha beta results - (result: number, move: number, visited_nodes: number, evaluated_nodes: number, max_depth_reached: number, parent_count: number)
+Returns void
 '''
 
 
@@ -176,6 +193,7 @@ def generate_output(filename, abp_list):
         for idx, abp in enumerate(abp_list):
             (result, move, visited_nodes, evaluated_nodes,
              max_depth_reached, parent_count) = abp
+            # Calculate Average Effective Branching Factor
             avg_effective_branching_factor = float(
                 (visited_nodes-1)) / parent_count
             f.write("Case " + str(idx)
@@ -190,14 +208,21 @@ def generate_output(filename, abp_list):
 
 
 '''
+Function that extracts the input from formatted text files
+Arguments:
+    - filename: string
+Returns list tuple: (tokens: list of numbers, last_token: number, depth: number, max_depth: number)
 '''
 
 
 def extract_input(filename):
     inputs = []
     with open(filename) as f:
+        # Extract test cases from file
         test_cases = list(f)
+        # Remove \n
         test_cases = [case.strip("\n") for case in test_cases]
+        # From "TakeTokens 1 2 3 4 5" -> [1, 2, 3, 4, 5]
         test_cases = [[ele for ele in case.split(" ") if ele.isdigit()]
                       for case in test_cases if "TakeTokens" in case]
         for case in test_cases:
