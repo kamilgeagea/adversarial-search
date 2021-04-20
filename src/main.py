@@ -16,7 +16,7 @@ generate_output("./results/testcases.txt", ab)
 # RANDOM TEST CASES
 
 filename = "./testcases/random_testcases.txt"
-generate_test_case_file(filename, 5)
+# generate_test_case_file(filename, 10)
 inputs = extract_input(filename)
 
 ab = [alpha_beta_pruning((x[0], x[1], x[2]), float(
