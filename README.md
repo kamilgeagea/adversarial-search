@@ -1,4 +1,4 @@
-# COMP472-Assignment 3
+# Adversarial Search
 COMP 472 - Assignment 3 - The PNT-Game
 
 # Game Description
